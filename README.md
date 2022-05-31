@@ -5,6 +5,7 @@ In this repository I'm going to put some of my small projects while I'm learning
 |:---|:---|
 |[Hoop](#Hoop)|A simple game|
 |[Search by first characters](#Search-by-first-characters)|A search machine for names that works with first chars of the last and the first names
+|[To-Do](#to-do)|A to-do list|
 <div style="text-align: justify">
 <a name="Hoop"/>
 
@@ -35,6 +36,8 @@ Az an example you have entered "a" and "b", the program is going to give you "Al
 ### Notes:
 You can change the list (names) for different results but it was just a pre-made one for testing.
 
+<a name="To-Do"/>
+
 ## To-Do
 As the names suggests its a to-do list which you can interact with via commands.
 ### Table of commands:
@@ -54,17 +57,14 @@ It opens this page that you're looking at so you can read the readme for help
 
 #### Add:
 It adds a thing to the to-do list.
-But what if you wanted to add not just one but 6 different items, then you can use a feature to do it!
+But what if you wanted to add not just one but 3 different items, then you can use a feature to do it!
 For doing it just add m= and then the number of things that you want to add then you can add them without needing to type the command every time. just like the code below.
 ##### Example:
 ```
-Command: add m=6
+Command: add m=3
 Add task: a
 Add task: b
 Add task: c
-Add task: d
-Add task: e
-Add task: f
 ```
 
 This is also another example for the simpler form
@@ -73,8 +73,13 @@ This is also another example for the simpler form
 Command: add
 Add task: a
 ```
-#### List:
-
 <a name="List"/>
+
+#### List:
+It gives you a list of all of the task (ToDos' list)
+
 <a name="Save"/>
+
+#### Save:
+It saves the ToDos' list into a file named database.py and after the program opened another time it will read the saved list
 </div>
