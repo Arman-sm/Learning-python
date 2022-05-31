@@ -27,7 +27,6 @@ The academy says that the idea to create this game in python was for somebody el
 <a name="Search-by-first-characters"/>
 
 ## Search by first characters
-
 In this project you have to specify two characters, the first one is going to be the first character of first name and the second one is going be the first character of the last name. Then the program is going to find a name based on the data you gave to it.
 
 ### Example:
@@ -35,4 +34,47 @@ Az an example you have entered "a" and "b", the program is going to give you "Al
 
 ### Notes:
 You can change the list (names) for different results but it was just a pre-made one for testing.
+
+## To-Do
+As the names suggests its a to-do list which you can interact with via commands.
+### Table of commands:
+|Command name|Short description|
+|:---|:---|
+|[Help](#Help)|Opens this repository for help|
+|[Add](#Add)|Adds things to the to-do list|
+|[List](#List)|Gives you the to-do list|
+|[Save](#Save)|Saves the list|
+
+### Commands:
+<a name="Help"/>
+
+#### Help:
+It opens this page that you're looking at so you can read the readme for help
+<a name="Add"/>
+
+#### Add:
+It adds a thing to the to-do list.
+But what if you wanted to add not just one but 6 different items, then you can use a feature to do it!
+For doing it just add m= and then the number of things that you want to add then you can add them without needing to type the command every time. just like the code below.
+##### Example:
+```
+Command: add m=6
+Add task: a
+Add task: b
+Add task: c
+Add task: d
+Add task: e
+Add task: f
+```
+
+This is also another example for the simpler form
+##### Example:
+```
+Command: add
+Add task: a
+```
+#### List:
+
+<a name="List"/>
+<a name="Save"/>
 </div>
