@@ -65,7 +65,7 @@ while True:
             openURL("https://github.com/Arman-sm/Learning-python")
             print("The program opened this project's github repository you can read the readme to learn more.")
         #Adds the input(s) to the ToDos list variable
-        elif command.split("")[0] == "add":
+        elif command.split(" ")[0] == "add":
             if "m=" in command:
                 for item in range(int(command[command.index("m=")+2 : ])):
                     ToDos.append([input("Add task: "), 0])
