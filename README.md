@@ -46,7 +46,11 @@ As the names suggests its a to-do list which you can interact with via commands.
 |[Help](#Help)|Opens this repository for help|
 |[Add](#Add)|Adds things to the to-do list|
 |[List](#List)|Gives you the to-do list|
+|[Status](#Status)|Lets you mark item as done or not done|
+|[Remove](#Remove)|It removes items|
 |[Save](#Save)|Saves the list|
+|[Clear](#Clear)|Clears the terminal|
+|[Database](#database)|Command related to database management|
 
 ### Commands:
 <a name="Help"/>
@@ -78,8 +82,86 @@ Add task: a
 #### List:
 It gives you a list of all of the task (ToDos' list)
 
+<a name="Status"/>
+
+#### Status:
+You can mark things done or not done, by default items are created as not done but you can change that.
+With the command "status check" or "status done" you can mark them as done and with the command "status" you can mark them as not done.
+but after these commands you have to tell the program which items you're going to mark, you have these options below.
+
+##### (their index):
+You can put their index in it and it will select just that item for you.
+###### tip:
+The list command also gives you items' index.
+##### all:
+It will simply select all of them.
+##### from and to:
+If the from command is used with the "to" command the index after the "from" command will specify the selection starting point and the index after the "to" command will specify the selection ending point.
+##### from:
+If "from" is used alone the program is going to select from the index after the "from" command till the end.
+##### to:
+If "to" is used alone the program is going to select from the beginning till the index after the "to" command.
+
+<a name="Remove"/>
+
+#### Remove:
+It removes items you want.
+For selecting the items you can enter these command after the remove command.
+
+##### (their index):
+You can put their index in it and it will select just that item for you.
+###### tip:
+The list command also gives you items' index.
+##### all:
+It will simply select all of them.
+##### from and to:
+If the from command is used with the "to" command the index after the "from" command will specify the selection starting point and the index after the "to" command will specify the selection ending point.
+##### from:
+If "from" is used alone the program is going to select from the index after the "from" command till the end.
+##### to:
+If "to" is used alone the program is going to select from the beginning till the index after the "to" command.
+
 <a name="Save"/>
 
 #### Save:
-It saves the ToDos' list into a file named database.py and after the program opened another time it will read the saved list
+It saves the ToDos' list into a file named database.py or something else if you have changed your database and after the program opened another time it will read the saved list
+##### Note:
+The program will open database.py as its database at first but you can change it later.
+
+<a name="Clear"/>
+
+#### Clear:
+It clears the commands you have entered
+
+<a name="Exit"/>
+
+#### Exit:
+This command closes the program
+
+<a name="Database"/>
+
+#### Database:
+This command has the following commands you can access them by typing each one after the database command
+By the way you can enter db instead of database they are the same like "db switch databasename" instead of "database switch databasename"
+##### Restore:
+It changes the current unsaved to-do list to the last saved version of the database
+##### Switch:
+With this command you can switch between databases and have multiple to-dos
+You just have to type the name of a pre-made database after the switch command just like this example below:
+```
+Command: database switch databasename
+```
+###### Note:
+You can make databases with the "database new" command
+##### New:
+With this command you can make more databases than the default and have multiple to-do lists
+###### Note:
+After you make a database the program will switch from the current database to the one newly created
+You can also switch between databases with the "database switch" command
+##### Saveas:
+It will create a database with your to-do list in the current directory
+###### Note:
+It won't switch to the newly created database automatically
+
+
 </div>
