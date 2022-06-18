@@ -1,4 +1,5 @@
 import importlib
+from logging import exception
 from operator import index
 import os
 from posixpath import split
@@ -8,7 +9,8 @@ if not os.path.exists("Database.py"):
     File.write("ToDos = []")
     File.close()
 #Imports the database
-database = importlib.import_module("database")
+databaseName = "database"
+database = importlib.import_module(databaseName)
 ToDos = database.ToDos
 #Prints the welcome text
 print("\n" + "Welcome to your To-Do list".center(os.get_terminal_size()[0]))
@@ -97,35 +99,33 @@ while True:
             print("\n" + "Your To-Do list".center(os.get_terminal_size()[0]))
         #Things related to database like saving, restoring and database management
         elif "database" in command or "db" in command:
-            #Discard the changes and restores the not updated version of the list available in the database
-            if command == "restore":
+            #Manages databases
+            command = [item for item in command.split(" ")]
+            for idx, item in enumerate(command):
+                if item == "":
+                    del command[idx]
+             #Discard the changes and restores the not updated version of the list available in the database
+            if command[1] == "restore":
                 if input("Are you sure you want to discard the changes you made lastly? (y/n): ") == "y":
                     importlib.reload(database)
                     ToDos = database.ToDos
-            #Manages databases
-            else:
-                command = [item for item in command.split(" ")]
-                for idx, item in enumerate(command):
-                    if item == "":
-                        del command[idx]
-
-                if "switch" in command:
-                    databaseName = command[command.index("switch")+1]
-                    database = importlib.import_module(databaseName)
-                    ToDos = database.ToDos
-                elif "new" in command:
-                    File = open(command[command.index("new")+1]+".py", "x")
-                    File.write("ToDos = []")
-                    File.close()
-                    databaseName = command[command.index("new")+1]
-                    database = importlib.import_module(databaseName)
-                    ToDos = database.ToDos
-                elif "saveas" in command:
-                    File = open(command[command.index("saveas")+1]+".py", "x")
-                    File.write("ToDos = " + str(ToDos))
-                    File.close()
-                elif "add" in command:
-                    print()
+            elif command[1] == "switch":
+                databaseName = command[command.index("switch")+1]
+                database = importlib.import_module(databaseName)
+                ToDos = database.ToDos
+            elif command[1] == "new":
+                File = open(command[command.index("new")+1]+".py", "x")
+                File.write("ToDos = []")
+                File.close()
+                databaseName = command[command.index("new")+1]
+                database = importlib.import_module(databaseName)
+                ToDos = database.ToDos
+            elif command[1] == "saveas":
+                File = open(command[command.index("saveas")+1]+".py", "x")
+                File.write("ToDos = " + str(ToDos))
+                File.close()
+            elif command[1] == "add":
+                print()
 
         #Exits the program
         elif command == "exit":
@@ -134,5 +134,6 @@ while True:
         #If the user enters a wrong command this is going to appear
         else:
             print("Invalid Command! You can check the documentation with entering the (help) command")
-    except:
+    except exception as e:
         print("Something went wrong!")
+        print(e)
