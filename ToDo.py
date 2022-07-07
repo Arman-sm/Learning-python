@@ -1,5 +1,4 @@
 import importlib
-from logging import exception
 from operator import index
 import os
 from posixpath import split
@@ -134,6 +133,5 @@ while True:
         #If the user enters a wrong command this is going to appear
         else:
             print("Invalid Command! You can check the documentation with entering the (help) command")
-    except exception as e:
+    except:
         print("Something went wrong!")
-        print(e)
