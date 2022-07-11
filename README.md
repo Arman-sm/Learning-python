@@ -4,8 +4,10 @@ In this repository I'm going to put some of my small projects while I'm learning
 |Project name|Short description|
 |:---|:---|
 |[Hoop](#Hoop)|A simple game|
-|[Search by first characters](#Search-by-first-characters)|A search machine for names that works with first chars of the last and the first names
+|[Search by first characters](#Search-by-first-characters)|A search machine for names that works with first chars of the last and the first names|
+|[Functional calculator](#functional-calculator)|A really simple calculator full of functions|
 |[To-Do](#to-do)|A to-do list|
+
 <div style="text-align: justify">
 <a name="Hoop"/>
 
@@ -27,6 +29,7 @@ The academy says that the idea to create this game in python was for somebody el
 
 <a name="Search-by-first-characters"/>
 
+
 ## Search by first characters
 In this project you have to specify two characters, the first one is going to be the first character of first name and the second one is going be the first character of the last name. Then the program is going to find a name based on the data you gave to it.
 
@@ -36,9 +39,11 @@ Az an example you have entered "a" and "b", the program is going to give you "Al
 ### Notes:
 You can change the list (names) for different results but it was just a pre-made one for testing.
 
+
 <a name="To-Do"/>
 
 ## To-Do
+
 As the names suggests its a to-do list which you can interact with via commands.
 ### Table of commands:
 |Command name|Short description|
@@ -138,7 +143,7 @@ It clears the commands you have entered
 #### Exit:
 This command closes the program
 
-<a name="Database"/>
+<a name="Database">
 
 #### Database:
 This command has the following commands you can access them by typing each one after the database command
@@ -163,5 +168,15 @@ It will create a database with your to-do list in the current directory
 ###### Note:
 It won't switch to the newly created database automatically
 
+<a name="Functional calculator">
 
+## Functional calculator
+It's a really simple calculator that as the name suggests it's full of functions and hopefully it also functions too :)
+
+You just have to enter the index of the operation you want and then you just have to enter the first and the second number and it will give you the answer
+
+### Note:
+For getting the list of operations you can enter "list" instead of the index of an operation.
+
+You can also replace "list" with "exit" for exiting from the program and "clear" or "cls" for cleaning the terminal.
 </div>
