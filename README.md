@@ -5,8 +5,8 @@ In this repository I'm going to put some of my small projects while I'm learning
 |:---|:---|
 |[Hoop](#Hoop)|A simple game|
 |[Search by first characters](#Search-by-first-characters)|A search machine for names that works with first chars of the last and the first names|
-|[Functional calculator](#functional-calculator)|A really simple calculator full of functions|
 |[To-Do](#to-do)|A to-do list|
+|[Functional calculator](#functional-calculator)|A really simple calculator full of functions|
 
 <div style="text-align: justify">
 <a name="Hoop"/>
