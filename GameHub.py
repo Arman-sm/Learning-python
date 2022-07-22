@@ -3,8 +3,7 @@ from os import *
 import subprocess
 
 games = {}
-commands = [["detectDir", {"-p" : "."}], ["clear"], ["quit"]]
-
+commands = [["detect", {"-p" : ".", "-f" : False, "-s" : False}], ["clear"], ["quit"]]
 
 #Organizing the command in a dict
 def bakeCommand(command):
@@ -25,9 +24,70 @@ def bakeCommand(command):
             #Adding the tags to the command info
             for index, tag in enumerate(commandChunks[1:]):
                 if tag[0] == "-":
-                    command.update({tag : (commandChunks[index+2] if commandChunks[index+2][0] != "-" else True) if len(commandChunks) >= index + 2 else True})
+                    command.update({tag : (commandChunks[index] if commandChunks[index][0] != "-" else True) if len(commandChunks) >= index + 2 else True})
             return command
     return "Command not found"
+
+def selectionTool(listOfThings):
+    #Deconstructs the input
+    Input = ["", ""]
+    listOfThings = [[item, True] for item in listOfThings]
+    while all([False if Input[1] == endValue else True for endValue in ["exit", "quit", "done"]]):
+        Input = input("> ").split(" ")
+        Input.insert(0,"0")
+
+        #Removes empty items in the list
+        for idx, item in enumerate(Input):
+            if item == "":
+                del Input[idx]
+
+        result = [0, 0]
+        markAs = False if Input[1] == "not" else True
+        selection = [0, 0]
+                    
+        if "contain" in Input:
+            for idx, item in enumerate(listOfThings):
+                if Input[-1] in item[0]:
+                    listOfThings[idx][1] = markAs
+
+        elif "list" in Input:
+            for idx, item in enumerate(listOfThings):
+                print(f"<{idx+1}> {item[0]}", "✅" if item[1] else "❌")
+        elif Input[1] == "all":
+            for idx in range(len(listOfThings)):
+                listOfThings[idx][1] = markAs
+        elif "from" in Input or "to" in Input or Input[-1].isdigit():
+            if "from" in Input:
+                selection[0] = Input.index("from")+1 
+            elif "to" in Input:
+                result[0] = 1
+            if "to" in Input:
+                selection[1] = Input.index("to")+1
+            #Single item
+            elif not "from" in Input:
+                result[0] = int(Input[-1])
+                result[1] = int(Input[-1])
+            #For just one of the multi item features
+            else:
+                result[1] = len(listOfThings)
+            #Converting index of the indexes into indexes
+            result = [result[0] + int(Input[selection[0]]) - 1, result[1] + int(Input[selection[1]])]
+            #reversing values between the two ends so the start won't be more than the end
+            if  result[0] > result[1]:
+                result[0], result[1] = result[1], result[0]
+            
+            result[0] = len(listOfThings) if result[0] > len(listOfThings) else 0 if result[0] < 0 else result[0]
+            result[1] = len(listOfThings) if result[1] > len(listOfThings) else 0 if result[1] < 0 else result[1]
+
+            for idx in range(result[0], result[1]):
+                listOfThings[idx][1] = markAs
+
+    Result = []
+    for item in listOfThings:
+        if item[1]:
+            Result.append(item[0])
+    return Result
+
 #Commands
 def clear(_):
     system("cls")
@@ -35,21 +95,30 @@ def clear(_):
 def quit(_):
     exit()
 
-def detectDir(command):
-    if command["-p"] != "." and not path.isdir(command["-p"]):
-        print("Directory not found")
-        
-    validFiles = []
-    for file in listdir(command["-p"]):
-        if path.splitext(file)[1] == ".py":
-            validFiles.append(file)
-    print(validFiles)
+def detect(command):
+    if command["-f"]:
+        if path.splitext(command["-p"])[1] == ".py" and path.isfile(command["-p"]):
+            validFiles = [command["-p"]]
+        else:
+            print("File not found")
+            return "!"
+    else:
+        if command["-p"] != "." and not path.isdir(command["-p"]):
+            print("Directory not found")
+            return "!"
+        validFiles = []
+        for file in listdir(command["-p"]):
+            if path.splitext(file)[1] == ".py":
+                validFiles.append(file)
+    
+    if command["-s"]:
+        validFiles = selectionTool(validFiles)
     global games
-    if input("Are you sure? They might cause malicious activities on your computer! (y/n): ").lower() == "y":
+    if input("Are you sure? This action might cause malicious activities to happen on your computer! (y/n): ").lower() == "y":
         for game in validFiles:
-            if game != path.splitext(path.basename(__file__))[0]:
+            if game != path.basename(__file__):
                 games.update({path.splitext(game)[0] : path.join(command["-p"] if command["-p"] != '.' else '', game)})
-
+                
 #Main loop
 while(True):
     command = bakeCommand(input("Command: "))
@@ -59,4 +128,4 @@ while(True):
         else:
             subprocess.call(games[command["command"]], shell=True)
     else:
-        print(command) 
+        print(command)
