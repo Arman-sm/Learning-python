@@ -1,9 +1,17 @@
+#Importing dependencies
 from importlib import *
-from os import *
-import subprocess
-
-games = {}
-commands = [["detect", {"-p" : ".", "-f" : False, "-s" : False}], ["clear"], ["quit"]]
+from os import path
+from os import system
+from os import listdir
+from subprocess import run
+#Initializing variables
+commands = [["detect", {"-p" : ".", "-f" : False, "-s" : False}], ["clear"], ["exit"], ["config", {"-t" : "save", "-p" : "config.py"}]]
+#Importing the config if available
+if path.isfile("config.py"):
+    configFile = import_module("config")
+    games = configFile.config["games"]
+else:
+    configFile = ""
 
 #Organizing the command in a dict
 def bakeCommand(command):
@@ -22,9 +30,10 @@ def bakeCommand(command):
                 if commandConfig[0] == commandChunks[0] and len(commandConfig) > 1:
                     command.update(commandConfig[1])
             #Adding the tags to the command info
+            
             for index, tag in enumerate(commandChunks[1:]):
                 if tag[0] == "-":
-                    command.update({tag : (commandChunks[index] if commandChunks[index][0] != "-" else True) if len(commandChunks) >= index + 2 else True})
+                    command.update({tag : (commandChunks[index+2] if commandChunks[index+2][0] != "-" else True) if len(commandChunks) >= index + 3 else True})
             return command
     return "Command not found"
 
@@ -76,8 +85,8 @@ def selectionTool(listOfThings):
             if  result[0] > result[1]:
                 result[0], result[1] = result[1], result[0]
             
-            result[0] = len(listOfThings) if result[0] > len(listOfThings) else 0 if result[0] < 0 else result[0]
-            result[1] = len(listOfThings) if result[1] > len(listOfThings) else 0 if result[1] < 0 else result[1]
+            result = [len(listOfThings) if result[idx] > len(listOfThings) else 0 if result[idx] < 0 else result[idx] for idx in range(2)]
+            
 
             for idx in range(result[0], result[1]):
                 listOfThings[idx][1] = markAs
@@ -95,6 +104,22 @@ def clear(_):
 def quit(_):
     exit()
 
+def config(command):
+    command["-t"] = command["-t"].lower()
+    global configFile
+    global games
+    if command["-t"] == "save":
+        configFile = open(command["-p"], "w")
+        configFile.write("config = {'games' : "+ str(games)+"}")
+        configFile.close()
+    elif command["-t"] == "read" and path.isfile(command["-p"]):
+        if "configFile" in globals():
+            reload(configFile)
+        else:
+            import_module(command["-p"])
+        configFile = import_module("config")
+        games = configFile.config["games"]
+#Detects games
 def detect(command):
     if command["-f"]:
         if path.splitext(command["-p"])[1] == ".py" and path.isfile(command["-p"]):
@@ -124,8 +149,8 @@ while(True):
     command = bakeCommand(input("Command: "))
     if type(command) == dict:
         if command["command"] in [command[0] for command in commands]:
-                globals()[command["command"]](command)
+            globals()[command["command"]](command)
         else:
-            subprocess.call(games[command["command"]], shell=True)
+            run(games[command["command"]], shell=True)
     else:
         print(command)
